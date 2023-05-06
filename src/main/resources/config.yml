@@ -1,0 +1,30 @@
+
+# Plugin config from 06.05.2023 13:53 by Moscow time
+
+
+# Messages settings. damage-visible: damage pop-up over entity, can be false or true(by default: true)    damage-projectile-chat-messages: this "[i] Entity took 10 damage" thing, true by default
+messages:
+  damage-visible: true
+  damage-projectile-chat-messages: true
+
+
+# Colors for plugin
+# crit-damage: colors for crit damage gradient, crit-sign is a thing that appears before damage
+# default-damage: colors for non-crit damage gradient
+# All colors provided in HEX format, be careful!
+# Accent - colors of projectile damage message. First - main, dark-green in original, second - text, Entity name and HP damage value, third - text color of "i" inside [i]
+colors:
+  crit-damage:
+    first: "BE2510"
+    second: "FD7348"
+  crit-sign:
+    sign: "a"
+  default-damage:
+    first: "F16666"
+    second: "B79191"
+  accent:
+    first: "25af46"
+    second: "c3c3c3"
+    third: "2a4858"
+
+

@@ -1,0 +1,8 @@
+name: ShowDamage
+version: '${project.version}'
+main: ru.xw1w1.showdamage.Main
+api-version: 1.19
+
+#commands:
+  #showdamage:
+    #permission: showdamage.showdamage
