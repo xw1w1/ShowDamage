@@ -21,7 +21,7 @@ public class ShowDamage extends TextUtils {
             Main.getInstance();
             armorStand.customName(gradient(Main.getInstance().getConfiguration().getString("colors.crit-damage.first"), Main.getInstance().getConfiguration().getString("colors.crit-damage.second"), component(Main.getInstance().getConfiguration().getString("colors.crit-sign.sign") + " " + damage)));
         } else {
-            armorStand.customName(gradient(Main.getInstance().getConfiguration().getString("colors.default-damage.first"), Main.getInstance().getConfiguration().getString("colors.crit-damage.first"), damage));
+            armorStand.customName(gradient(Main.getInstance().getConfiguration().getString("colors.default-damage.first"), Main.getInstance().getConfiguration().getString("colors.default-damage.second"), damage));
         }
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), armorStand::remove, 25L);
     }
