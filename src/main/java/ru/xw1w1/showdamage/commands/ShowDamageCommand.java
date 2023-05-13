@@ -22,7 +22,7 @@ public class ShowDamageCommand extends TextUtils implements CommandExecutor {
         if (args.length >= 1) {
             if (args[0].equals("debugdamage")) {
                 ShowDamage showDamage = new ShowDamage();
-                showDamage.show("12.25", ((Player) sender).getLocation(), false, config);
+                showDamage.show("12.25", ((Player) sender).getLocation(), false, config, null);
             }
         }
         return true;

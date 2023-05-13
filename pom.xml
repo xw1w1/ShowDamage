@@ -4,15 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ru.xw1w1</groupId>
+    <groupId>ru.xw1w1.showdamage</groupId>
     <artifactId>ShowDamage</artifactId>
-    <version>1.0</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <name>ShowDamage</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
