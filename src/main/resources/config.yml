@@ -8,15 +8,13 @@
 # damage-projectile-chat-messages: Sends "[i] Entity took x damage" message to projectile shooter, true by default
 # damage-visible-to-all: Sends pop-up over entity to everyone within render distance, false by default
 # damage-show-through-walls: Allows pop-up to appear through blocks and entities, true by default
-# damage-animation: In development, does nothing yet.
 messages:
   damage-visible: true
   damage-popup-lifetime: 25.0
   damage-projectile-chat-messages: true
   damage-visible-to-all: false
   damage-show-through-walls: true
-  damage-animate: true
-  damage-hearts: true
+
 
 # Colors for plugin
 # crit-damage: colors for crit damage gradient, crit-sign is a thing that appears before damage

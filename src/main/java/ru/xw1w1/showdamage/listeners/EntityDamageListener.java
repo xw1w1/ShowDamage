@@ -26,7 +26,7 @@ public class EntityDamageListener extends TextUtils implements Listener {
             @NotNull final DecimalFormat df = new DecimalFormat("0.00");
             @NotNull final String damage = df.format(event.getDamage());
             @NotNull final Location location = event.getEntity().getLocation();
-            @NotNull final Location spawnLocation = new Location(location.getWorld(), location.getX(), location.getY() + (event.getEntity().getBoundingBox().getHeight()), location.getZ());
+            @NotNull final Location spawnLocation = new Location(location.getWorld(), location.getX(), location.getY() + (event.getEntity().getBoundingBox().getHeight()) + 0.15, location.getZ());
 
 
             if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
