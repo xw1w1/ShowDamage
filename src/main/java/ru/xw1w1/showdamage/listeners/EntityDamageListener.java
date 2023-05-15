@@ -25,8 +25,8 @@ public class EntityDamageListener extends TextUtils implements Listener {
         if (config.getBoolean("messages.damage-visible")) {
             @NotNull final DecimalFormat df = new DecimalFormat("0.00");
             @NotNull final String damage = df.format(event.getDamage());
-            @NotNull final Location eventLocation = event.getEntity().getLocation();
-            @NotNull final Location location = new Location(eventLocation.getWorld(), eventLocation.getX() + 100, eventLocation.getY(), eventLocation.getZ());
+            @NotNull final Location location = event.getEntity().getLocation();
+            @NotNull final Location spawnLocation = new Location(location.getWorld(), location.getX(), location.getY() + (event.getEntity().getBoundingBox().getHeight()), location.getZ());
 
 
             if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
@@ -41,23 +41,16 @@ public class EntityDamageListener extends TextUtils implements Listener {
                                 hex(config.getString("colors.accent.second"), damage, " HP"),
                                 component(" damage"))));
 
-                if (projectile.getShooter() instanceof Player damager && !config.getBoolean("damage.visible-to-all")) {
+                if (projectile.getShooter() instanceof Player player) {
                     Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
                         if (config.getBoolean("messages.damage-projectile-chat-messages")) {
-                            damager.sendMessage(eventMessage);
+                            player.sendMessage(eventMessage);
                         }
                     });
-                    ShowDamage.show(damage, location, event.isCritical(), config, damager); // Damage is projectile Player to Entity, visible to only player
-                    return;
                 }
             }
 
-            if (event.getDamager() instanceof Player damager && !config.getBoolean("damage.visible-to-all")) {
-                ShowDamage.show(damage, location, event.isCritical(), config, damager); // Damage is Player to Entity, visible to only player
-                return;
-            }
-
-            ShowDamage.show(damage, location, event.isCritical(), config, null); // Damage is non-projectile/projectile Entity/Player to Entity, visible to all
+            ShowDamage.show(damage, spawnLocation, event.isCritical(), config, event.getDamager());
         }
     }
 }

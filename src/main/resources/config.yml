@@ -1,19 +1,22 @@
 
-# Plugin config from 06.05.2023 13:53 by Moscow time
+# Plugin config from 20:04 13/05/2023 London Time
 
 
 # Messages settings.
 # damage-visible: damage pop-up over entity, can be false or true (by default: true)
+# damage-popup-lifetime: Value determines how long the popup will last before disappearing, 25.0 by default
 # damage-projectile-chat-messages: Sends "[i] Entity took x damage" message to projectile shooter, true by default
 # damage-visible-to-all: Sends pop-up over entity to everyone within render distance, false by default
 # damage-show-through-walls: Allows pop-up to appear through blocks and entities, true by default
 # damage-animation: In development, does nothing yet.
 messages:
   damage-visible: true
+  damage-popup-lifetime: 25.0
   damage-projectile-chat-messages: true
   damage-visible-to-all: false
   damage-show-through-walls: true
-  damage-animation: true
+  damage-animate: true
+  damage-hearts: true
 
 # Colors for plugin
 # crit-damage: colors for crit damage gradient, crit-sign is a thing that appears before damage
@@ -25,7 +28,7 @@ colors:
     first: "BE2510"
     second: "FD7348"
   crit-sign:
-    sign: "a"
+    sign: "X"
   default-damage:
     first: "F16666"
     second: "B79191"
