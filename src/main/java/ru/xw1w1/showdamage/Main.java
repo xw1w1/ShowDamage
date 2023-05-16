@@ -14,7 +14,7 @@ import java.util.*;
 
 public final class Main extends JavaPlugin {
 
-    private final static Map<Location, DamageData> locationDamageEntityMap = new LinkedHashMap<>();  // This is really difficult to name, it keys Chunks to Entity UUID
+    private final static Map<Location, DamageData> locationDamageEntityMap = new LinkedHashMap<>();  // This is really difficult to name
 
     @Override
     public void onEnable() {
