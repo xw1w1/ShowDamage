@@ -39,7 +39,7 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>C:\Users\mecha\Desktop\Dev\Minecraft Server\plugins\ShowDamage-1.0.jar</outputFile>
+
                         </configuration>
                     </execution>
                 </executions>
