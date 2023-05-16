@@ -9,7 +9,7 @@ import ru.xw1w1.showdamage.Main;
 public class ShowDamage extends TextUtils {
     public static void show(@NotNull String damage, @NotNull Location loc, boolean critical, @NotNull FileConfiguration config, @NotNull Entity damager) {
         @NotNull TextDisplay textDisplay = (TextDisplay) loc.getWorld().spawnEntity(loc, EntityType.TEXT_DISPLAY);
-        final long lifetime = config.getLong("messages.damage-popup-lifetime");
+        final long lifetime = config.getLong("damage.popup-lifetime", 25L);
 
         textDisplay.setGravity(true);
         textDisplay.setBillboard(Display.Billboard.CENTER); // Aligns the text to face towards player
@@ -17,14 +17,13 @@ public class ShowDamage extends TextUtils {
         textDisplay.setInvulnerable(true);
 
 
-        if (damager instanceof Player player && !config.getBoolean("messages.damage-visible-to-all")) {
+        if (damager instanceof Player player && !config.getBoolean("damage.visible-to-all", false)) {
             textDisplay.setVisibleByDefault(false); // This might break in the future!! Check @ApiStatus.Experimental
             player.showEntity(Main.getInstance(), textDisplay); // Might break: Check @ApiStatus.Experimental
         }
 
-        if (config.getBoolean("messages.damage-show-through-walls")) {
+        if (config.getBoolean("damage.show-through-walls", true)) {
             textDisplay.setSeeThrough(true);
-
         }
 
         textDisplay.teleport(loc);
