@@ -1,19 +1,31 @@
 
-# Plugin config from 20:04 13/05/2023 London Time
+# Plugin config from 16:37 16/05/2023 London Time
 
 
 # Messages settings.
 # damage-visible: damage pop-up over entity, can be false or true (by default: true)
-# damage-popup-lifetime: Value determines how long the popup will last before disappearing, 25.0 by default
 # damage-projectile-chat-messages: Sends "[i] Entity took x damage" message to projectile shooter, true by default
-# damage-visible-to-all: Sends pop-up over entity to everyone within render distance, false by default
-# damage-show-through-walls: Allows pop-up to appear through blocks and entities, true by default
 messages:
   damage-visible: true
-  damage-popup-lifetime: 25.0
   damage-projectile-chat-messages: true
-  damage-visible-to-all: false
-  damage-show-through-walls: true
+
+# damage settings.
+# visible-to-all: Sends pop-up over entity to everyone within render distance, false by default
+# show-through-walls: Allows pop-up to appear through blocks and entities, true by default
+# popup-lifetime: Value determines how long the popup will last before disappearing, 25.0 by default
+
+damage:
+  visible-to-all: false
+  show-through-walls: true
+  popup-lifetime: 25.0
+
+# multiple-entity-count settings.
+# enabled: Counts how many entities were hit with a sweep attack or explosion, true by default
+# distance: Value determines the maximum distance of blocks that damage should be considered as a total, 10 by default
+multiple-entity-count:
+  enabled: true
+  distance: 10.0
+
 
 
 # Colors for plugin
