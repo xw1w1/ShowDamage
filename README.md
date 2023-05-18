@@ -11,7 +11,6 @@ Critical damage dealt by an entity has an indicator:
 
 ![critical-damage](https://media.discordapp.net/attachments/877237543819702322/1108856891490185306/DGsQ6me.png)
 
-
 Damage dealt to entity plus sweep attack to other entity (can be disabled in config):
 
 ![sweep-attack](https://media.discordapp.net/attachments/877237543819702322/1108856891251114014/lm7aGQr.png)
@@ -23,6 +22,27 @@ Damage dealt to entity with an explosion by block (or entity):
 The plugin also has a message output if damage was caused by a projectile:
 
 ![projectile-message](https://media.discordapp.net/attachments/918548823134077058/1108231482075517058/image.png)
+
+### Feature list
+- Highly configurable config
+   -  Popup lifetime adjustable
+   -  Projectile Chat messages toggleable
+   -  Multiple Entity damage stacking toggleable & adjustable
+   -  Popup visiblity through walls toggleable
+   -  Hex Color-coded messages adjustable
+   -  Plugin functionality toggleable
+- Config hot-reloadable
+- Multiple entity damage stacks into one message
+- Chat messages for projectile damage
+- Gradient text for popups
+
+### Roadmap (18/05/23)
+- [ ] Animated text displays for MC 1.20 (requires bug fix in the release)
+- [X] Add hearts option
+- [ ] Add alternate visible to all option where only PVP is affected and PVE is still visible to other players.
+- [X] Add command to disable pop-ups for the executor only
+- [ ] Add an option that switches the received damage in hp to the remaining (Zombie took 6 HP damage / Zombie have 14 HP left) + heart form
+- [ ] Add action bar features
 
 ### Config
 ```yaml
@@ -55,6 +75,11 @@ colors:
 ```
 
 
-#### Releases
+### Releases
 Check releases for the latest jar files, this plugin gets updated often as of 18/05/2023.
 You can build the jar file if you would like, as releases might not contain the latest fixes and features, however expect them to be more buggy than an official release. 
+
+### Other
+If you notice any bugs or errors in plugin, please contact us via Discord: xw1w1# 0001
+
+All source code is available for free.
