@@ -80,6 +80,6 @@ Check releases for the latest jar files, this plugin gets updated often as of 18
 You can build the jar file if you would like, as releases might not contain the latest fixes and features, however expect them to be more buggy than an official release. 
 
 ### Other
-If you notice any bugs or errors in plugin, please contact us via Discord: xw1w1# 0001
+If you notice any bugs or errors in plugin, please file an issue in this repo or contact us via Discord: xw1w1# 0001 & Maik# 0711
 
 All source code is available for free.
