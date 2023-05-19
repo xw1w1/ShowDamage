@@ -37,6 +37,10 @@ The plugin also has a message output if damage was caused by a projectile:
 - Gradient text for popups
 
 ### Roadmap (18/05/23)
+- [X] Add Text Displays
+- [X] Add Multi Entity damage
+- [X] Add text visiblity through walls
+- [X] Add more configurability (pop-up lifetime, config use in new features)
 - [ ] Animated text displays for MC 1.20 (requires bug fix in the release)
 - [X] Add hearts option
 - [ ] Add alternate visible to all option where only PVP is affected and PVE is still visible to other players.
