@@ -14,12 +14,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.NotNull;
 import ru.xw1w1.showdamage.Main;
 import ru.xw1w1.showdamage.utils.DamageData;
+import ru.xw1w1.showdamage.utils.MultiDamageData;
 import ru.xw1w1.showdamage.utils.ShowDamage;
 import static ru.xw1w1.showdamage.utils.TextUtils.*;
 
-import java.text.DecimalFormat;
 import java.util.Iterator;
-
 
 
 public class EntityDamageListener implements Listener {
@@ -37,15 +36,21 @@ public class EntityDamageListener implements Listener {
 
         if (!config.getBoolean("messages.damage-visible", true)) return;
 
-        @NotNull final DecimalFormat df = new DecimalFormat("0.00");
-        @NotNull final String damage = df.format(event.getDamage());
-        @NotNull final Location location = event.getEntity().getLocation();
-        @NotNull final Location spawnLocation = new Location(location.getWorld(), location.getX(), location.getY() + (event.getEntity().getBoundingBox().getHeight()) + 0.15, location.getZ());
+        @NotNull final DamageData damage = new DamageData(event.getDamage(), config.getBoolean("damage.hearts", false)); // false
+        @NotNull final Location eventLocation; // Assigned in code block below;
+        {
+            @NotNull final Location tempLoc = event.getEntity().getLocation();
+            eventLocation = new Location(tempLoc.getWorld(), tempLoc.getX(), tempLoc.getY() + (event.getEntity().getBoundingBox().getHeight()) + 0.15, tempLoc.getZ());
+        }
+
 
         if (event.getEntity().getType().equals(EntityType.DROPPED_ITEM)) return;
+        if (event.getEntity().getType().equals(EntityType.ARMOR_STAND) && event.getEntity().isInvulnerable()) return;
 
         switch (event.getCause()) {
             case PROJECTILE:
+                if (!config.getBoolean("messages.damage-projectile-chat-messages", true)) break;
+
                 @NotNull AbstractArrow projectile = (AbstractArrow) event.getDamager();
                 @NotNull final Component eventMessage = hex(
                         config.getString("colors.accent.first"), single(components("[",
@@ -55,14 +60,15 @@ public class EntityDamageListener implements Listener {
                                 component(" took "),
                                 hex(config.getString("colors.accent.second"), damage, " HP"),
                                 component(" damage"))));
+
                 if (projectile.getShooter() instanceof Player player) {
                     Bukkit.getScheduler().runTaskAsynchronously(Main.getInstance(), () -> {
-                        if (config.getBoolean("messages.damage-projectile-chat-messages", true)) {
-                            player.sendMessage(eventMessage);
-                        }
+                        player.sendMessage(eventMessage);
                     });
                 }
+
                 break;
+
             case ENTITY_ATTACK:
                 if (event.getDamager() instanceof Player player && !isHoldingSword(player)) break;
 
@@ -70,38 +76,34 @@ public class EntityDamageListener implements Listener {
 
                 if (!config.getBoolean("multiple-entity-count.enabled", true)) break;
 
-                Location damageLocation = findKeyByDistance(location, config.getDouble("multiple-entity-count.distance", 10.0)); // First, try to find the first damageData entry
-                if (damageLocation == null) {
-                    createDamageData(location, event.getCause(), damage);
-                    damageLocation = location;
-                } else {
-                    Main.MultiDamageSystem.appendToData(damageLocation);
+                Location keyLocation = findKeyByDistance(eventLocation, config.getDouble("multiple-entity-count.distance", 10.0)); // First, try to find the first damageData entry
+                if (keyLocation != null) Main.MultiDamageSystem.appendToData(keyLocation);
+                else {
+                    keyLocation = eventLocation;
+                    createMultiDamageData(keyLocation, event.getCause(), damage); // Configurability?
                 }
 
-                final Location finalDamageLocation = damageLocation;
+                final Location dmgInstanceLocation = keyLocation;
                 Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-                    int count = Main.MultiDamageSystem.getCount(finalDamageLocation); // minus 1 to consider only the other entities, not the main one
-                    Main.MultiDamageSystem.reduceSizeInData(finalDamageLocation);
-                    MultiDamageEndResult endResult = getDamageResult(finalDamageLocation, event.getCause(), count);
+                    @NotNull MultiDamageData mDamageData = Main.MultiDamageSystem.getMultiDamageData(dmgInstanceLocation);
+                    int count = mDamageData.count(); // minus 1 to consider only the other entities, not the main one
+                    mDamageData.reduce();
 
-                    switch (endResult) {
-                        case SINGLE_ENTITY_ATTACK_DONE -> ShowDamage.show(damage, spawnLocation, event.isCritical(), config, event.getDamager());
-                        case SWEEP_ENTITY_ATTACK_DONE -> {
-                            String mainDamage = Main.MultiDamageSystem.getDamageDealt(finalDamageLocation);
-                            ShowDamage.show( mainDamage + " + " + (count-1) + "X" + damage, spawnLocation, event.isCritical(), config, event.getDamager());
-                        }
-                        case EXPLOSION_DONE -> ShowDamage.show(count + "X" + damage, spawnLocation, event.isCritical(), config, event.getDamager());
-
+                    MultiDamageEndResult result = getDamageResult(mDamageData);
+                    switch (result) {
+                        case SINGLE_ENTITY_ATTACK_DONE -> ShowDamage.show(damage, dmgInstanceLocation, event.isCritical(), config, event.getDamager());
+                        case SWEEP_ENTITY_ATTACK_DONE -> ShowDamage.show(damage.preAppend(mDamageData.getDamageDealt().valueOf() + " + " + (count-1) + "X"), dmgInstanceLocation, event.isCritical(), config, event.getDamager());
+                        case EXPLOSION_DONE -> ShowDamage.show(damage.preAppend(count + "X"), dmgInstanceLocation, event.isCritical(), config, event.getDamager());
                     }
 
-                    if (!endResult.equals(MultiDamageEndResult.NOT_DONE)) Main.MultiDamageSystem.deleteEntry(finalDamageLocation);
+                    if (result != MultiDamageEndResult.NOT_DONE) Main.MultiDamageSystem.deleteEntry(dmgInstanceLocation);
 
                 }, 1L);
                 return;
         }
-        ShowDamage.show(damage, spawnLocation, event.isCritical(), config, event.getDamager());
+        ShowDamage.show(damage, eventLocation, event.isCritical(), config, event.getDamager());
     }
-    private static boolean isHoldingSword(Player player) {
+    private static boolean isHoldingSword(@NotNull Player player) {
         boolean sword = false;
         switch (player.getInventory().getItemInMainHand().getType()) { // enhanced switch statement
             case STONE_SWORD, DIAMOND_SWORD, GOLDEN_SWORD, IRON_SWORD, NETHERITE_SWORD, WOODEN_SWORD ->
@@ -123,24 +125,23 @@ public class EntityDamageListener implements Listener {
         }
         return damageLocation;
     }
-    private static void createDamageData(Location damageLocation, EntityDamageEvent.DamageCause cause, String damageDealt) {
-        DamageData damageData;
+    private static void createMultiDamageData(Location damageLocation, EntityDamageEvent.DamageCause cause, DamageData damageDealt) {
+        MultiDamageData mDamageData;
         if (cause == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
-            damageData = new DamageData(true, damageDealt);
+            mDamageData = new MultiDamageData(true, damageDealt);
         } else {
-            damageData = new DamageData(false);
+            mDamageData = new MultiDamageData(false);
 
         }
-        damageData.append();
-        Main.MultiDamageSystem.putDataInMap(damageLocation, damageData);
+        mDamageData.append();
+        Main.MultiDamageSystem.putDataInMap(damageLocation, mDamageData);
     }
-
-    private static MultiDamageEndResult getDamageResult(Location damageLocation, EntityDamageEvent.DamageCause cause, int count) {
-        if (Main.MultiDamageSystem.getSize(damageLocation) == 0) {  // Reduction to 0 means there is no more entities hit as the final task was completed.
-            if (count == 1) { // A maximum count of 1 means that the final task was completed but only one entity was hit.
+    private static MultiDamageEndResult getDamageResult(MultiDamageData mDamageData) {
+        if (mDamageData.size() == 0) {  // Reduction to 0 means there is no more entities hit as the final task was completed.
+            if (mDamageData.count() == 1) { // A maximum count of 1 means that the final task was completed but only one entity was hit.
                 return MultiDamageEndResult.SINGLE_ENTITY_ATTACK_DONE;
             }else {
-                if (Main.MultiDamageSystem.isDamagedBySword(damageLocation)){ // Damage was dealt by sword but more than one entity was hit, this implies a sweep attack.
+                if (mDamageData.isDamagedBySword()){ // Damage was dealt by sword but more than one entity was hit, this implies a sweep attack.
                     return MultiDamageEndResult.SWEEP_ENTITY_ATTACK_DONE;
                 }else { // Damage was dealt to multiple entities but not by a sword, this implies an explosion.
                     return MultiDamageEndResult.EXPLOSION_DONE;
@@ -149,5 +150,6 @@ public class EntityDamageListener implements Listener {
         }
         return MultiDamageEndResult.NOT_DONE;
     }
+
 
 }

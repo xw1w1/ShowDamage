@@ -1,38 +1,51 @@
 package ru.xw1w1.showdamage.utils;
 
+
+import org.jetbrains.annotations.NotNull;
+
+import java.text.DecimalFormat;
+
 public class DamageData {
-    private int count = 0;
-    private boolean damagedBySword = false;
-    private String damageDealt;
-    private int size = 0;
+    private final int HEART_VALUE = 2;
+    private final long rawDamage;
+    private @NotNull String formattedDamage;
+    public DamageData(double rawDamage, boolean hearts) {
+        this.rawDamage = (long) rawDamage;
+        if (hearts) {
+            formattedDamage = convertDecimalToHearts();
+        }else {
+            formattedDamage = (new DecimalFormat("0.00")).format(rawDamage);
+        }
 
-    public DamageData(boolean damageBySword, String damageDealt) {
-        this.damagedBySword = damageBySword;
-        this.damageDealt = damageDealt;
+    }
+    public DamageData preAppend(String string) {
+        formattedDamage = string + formattedDamage;
+        return this;
+    }
+    private String convertDecimalToHearts() {
+        int smallHearts = Math.floorMod(rawDamage, HEART_VALUE);
+        int bigHearts = (int) (rawDamage-smallHearts)/2;
+        return "❤"
+                .repeat(Math.max(0, bigHearts))
+                .concat(
+                    "♥".repeat(Math.max(0, smallHearts))
+                );
 
     }
-    public DamageData(boolean damagedBySword) {
-        assert !damagedBySword : "Damaged by sword set to true but no damage value provided.";
-        this.damagedBySword = false;
-    }
-    public boolean isDamagedBySword() {
-        return damagedBySword;
-    }
-    public String getDamageDealt() {
-        return damageDealt;
-    }
-    public void append() {
-        size++;
-        count++;
-    }
-    public void reduce() {
-        size--;
-    }
-    public int count() {
-        return count;
+    public String valueOf() {
+        return formattedDamage;
     }
 
-    public int size() {
-        return size;
-    }
+    /*
+    Add hearts option
+        - Present amount of damage dealt and health remaining in heart form
+        - Use TEXTDISPLAY's Scale function to make text bigger
+    Add alternate visible to all option where only PVP is affected and PVE is still visible to other players.
+    Provide a perk option so server owners can monetize this feature
+    Animation for when TextDisplays get updated in MC 1.20
+    Write projectile damage in ACTION BAR
+    Write health left in ACTION BAR?
+
+
+     */
 }
