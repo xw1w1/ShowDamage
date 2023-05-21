@@ -8,16 +8,20 @@
 messages:
   damage-visible: true
   damage-projectile-chat-messages: true
+  popup-background-transparency: 64 # Default 64, determines how transparent the background of the popup is.
 
 # damage settings.
-# visible-to-all: Sends pop-up over entity to everyone within render distance, false by default
+# visible-to-all: Sends every pop-up caused by a player to everyone within render distance, false by default
 # show-through-walls: Allows pop-up to appear through blocks and entities, true by default
 # popup-lifetime: Value determines how long the popup will last before disappearing, 25.0 by default
 
 damage:
+  legacy-mode: false
   visible-to-all: false
   show-through-walls: true
   popup-lifetime: 25.0
+  allow-players-to-disable: true # Determines whether players can disable the popup for themselves, overrides visible-to-all individually
+  hide-entity-radius: 32 # Hides entities to players, within a (x) radius, who have disabled popups for themselves
 
 # multiple-entity-count settings.
 # enabled: Counts how many entities were hit with a sweep attack or explosion, true by default
@@ -38,7 +42,7 @@ colors:
     first: "BE2510"
     second: "FD7348"
   crit-sign:
-    sign: "X"
+    sign: "X" # ⭐ ❌ ☆ ✮ ❈ ✖
   default-damage:
     first: "F16666"
     second: "B79191"
