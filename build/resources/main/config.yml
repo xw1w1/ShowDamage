@@ -1,0 +1,44 @@
+# Messages settings.
+# projectile-damage-messages: Sends "[i] Entity took x damage" message to projectile shooter, true by default
+messages:
+  projectile-damage-messages: true
+  projectile-hearts-in-hotbar: true
+
+# damage settings.
+# visible-to-all: Sends every pop-up caused by a player to everyone within render distance, false by default
+# show-through-walls: Allows pop-up to appear through blocks and entities, true by default
+# popup-lifetime: Value determines how long the popup will last before disappearing, 25.0 by default
+
+render:
+  show-through-walls: true
+  popup-lifetime: 25.0
+  popup-background-transparency: 64 # Default 64, determines how transparent the background of the popup is.
+
+# Colors for plugin
+# crit-damage: colors for crit damage gradient, crit-sign is a thing that appears before damage
+# default-damage: colors for non-crit damage gradient
+# All colors provided in HEX format, be careful!
+# Accent - colors of projectile damage message. First - main, dark-green in original, second - text, Entity name and HP damage value, third - text color of "i" inside [i]
+
+colours:
+  mace:
+    first: "#536385"
+    second: "#5765C0"
+    brackets:
+      left: "⋩"
+      right: "⋨"
+  default:
+    first: "#D8D8D8"
+    second: "#E8E9ED"
+  crit:
+      first: "#BE2510"
+      second: "#FD7348"
+      sign: "✦" # ⭐ ❌ ☆ ✮ ❈ ✖
+  accent:
+    first: "#25af46"
+    second: "#c3c3c3"
+    third: "#1D6AC3"
+
+
+
+

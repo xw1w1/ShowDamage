@@ -1,54 +1,44 @@
-
-# Plugin config from 16:37 16/05/2023 London Time
-
-
 # Messages settings.
-# damage-visible: damage pop-up over entity, can be false or true (by default: true)
-# damage-projectile-chat-messages: Sends "[i] Entity took x damage" message to projectile shooter, true by default
+# projectile-damage-messages: Sends "[i] Entity took x damage" message to projectile shooter, true by default
 messages:
-  damage-visible: true
-  damage-projectile-chat-messages: true
-  popup-background-transparency: 64 # Default 64, determines how transparent the background of the popup is.
+  projectile-damage-messages: true
+  projectile-hearts-in-hotbar: true
 
 # damage settings.
 # visible-to-all: Sends every pop-up caused by a player to everyone within render distance, false by default
 # show-through-walls: Allows pop-up to appear through blocks and entities, true by default
 # popup-lifetime: Value determines how long the popup will last before disappearing, 25.0 by default
 
-damage:
-  legacy-mode: false
-  visible-to-all: false
+render:
   show-through-walls: true
   popup-lifetime: 25.0
-  allow-players-to-disable: true # Determines whether players can disable the popup for themselves, overrides visible-to-all individually
-  hide-entity-radius: 32 # Hides entities to players, within a (x) radius, who have disabled popups for themselves
-
-# multiple-entity-count settings.
-# enabled: Counts how many entities were hit with a sweep attack or explosion, true by default
-# distance: Value determines the maximum distance of blocks that damage should be considered as a total, 10 by default
-multiple-entity-count:
-  enabled: true
-  distance: 10.0
-
-
+  popup-background-transparency: 64 # Default 64, determines how transparent the background of the popup is.
 
 # Colors for plugin
 # crit-damage: colors for crit damage gradient, crit-sign is a thing that appears before damage
 # default-damage: colors for non-crit damage gradient
 # All colors provided in HEX format, be careful!
 # Accent - colors of projectile damage message. First - main, dark-green in original, second - text, Entity name and HP damage value, third - text color of "i" inside [i]
-colors:
-  crit-damage:
-    first: "BE2510"
-    second: "FD7348"
-  crit-sign:
-    sign: "X" # ⭐ ❌ ☆ ✮ ❈ ✖
-  default-damage:
-    first: "F16666"
-    second: "B79191"
+
+colours:
+  mace:
+    first: "#536385"
+    second: "#5765C0"
+    brackets:
+      left: "⋩"
+      right: "⋨"
+  default:
+    first: "#D8D8D8"
+    second: "#E8E9ED"
+  crit:
+      first: "#BE2510"
+      second: "#FD7348"
+      sign: "✦" # ⭐ ❌ ☆ ✮ ❈ ✖
   accent:
-    first: "25af46"
-    second: "c3c3c3"
-    third: "2a4858"
+    first: "#25af46"
+    second: "#c3c3c3"
+    third: "#1D6AC3"
+
+
 
 
