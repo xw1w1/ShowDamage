@@ -54,8 +54,4 @@ class ShowDamage : JavaPlugin(), ShowDamageAPI {
         return this.renderer
     }
 
-    override fun commandManager(): LegacyPaperCommandManager<CommandSender> {
-        return this.commandManager
-    }
-
 }
