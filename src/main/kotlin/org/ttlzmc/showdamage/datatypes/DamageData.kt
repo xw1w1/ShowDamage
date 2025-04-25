@@ -22,5 +22,15 @@ data class DamageData (
         location.add(x, y, z)
     }
 
-
+    private fun completeLocation(): Location {
+        check(damagedEntities.isEmpty()) { "Cannot calculate center for empty entity list. How did you even do that?" }
+        if (damagedEntities.size == 1) return damagedEntities.first().location
+        val world = damagedEntities.first().location.world
+        val (totalX, totalY, totalZ) = damagedEntities.fold(Triple(0.0, 0.0, 0.0)) { (accX, accY, accZ), entity ->
+            val loc = entity.location
+            Triple(accX + loc.x, accY + loc.y, accZ + loc.z)
+        }
+        val size = damagedEntities.size
+        return Location(world, totalX / size, totalY / size, totalZ / size)
+    }
 }
