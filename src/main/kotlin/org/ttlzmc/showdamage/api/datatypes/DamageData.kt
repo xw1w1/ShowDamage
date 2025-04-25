@@ -1,8 +1,9 @@
-package org.ttlzmc.showdamage.datatypes
+package org.ttlzmc.showdamage.api.datatypes
 
 import org.bukkit.Location
 import org.bukkit.damage.DamageSource
 import org.bukkit.entity.Entity
+import org.ttlzmc.showdamage.api.BukkitDamageMask
 
 @Suppress("UnstableApiUsage")
 data class DamageData (

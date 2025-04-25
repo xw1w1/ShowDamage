@@ -26,6 +26,5 @@ class ShowDamage : JavaPlugin() {
 
     companion object {
         fun getInstance() = getPlugin(ShowDamage::class.java)
-        fun getConfig() = ShowDamageConfiguration
     }
 }

@@ -1,12 +1,29 @@
 package org.ttlzmc.showdamage.api
 
+import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.annotations.ApiStatus
+import org.ttlzmc.showdamage.api.datatypes.DamageData
+import org.ttlzmc.showdamage.api.datatypes.DamageType
+import org.ttlzmc.showdamage.api.datatypes.DisplaySettings
+import org.ttlzmc.showdamage.util.JsonConfiguration
 import java.util.Objects.isNull
 
 interface ShowDamageAPI {
-
     @ApiStatus.Internal
     fun defaultProvider() = ShowDamageAPIProvider
+
+    fun getPlugin(): JavaPlugin
+
+    fun createSettings(json: JsonConfiguration, type: DamageType, critical: Boolean): DisplaySettings {
+        val isSeeThrough = json.getBoolean("visibility.show-through")
+        val visibleToEveryone = json.getBoolean("visibility.visible-to-everyone")
+        val visibilityRadius = json.getDouble("visibility.visibility-distance")
+        val backgroundTransparency = json.getInt("colors.popup-background-transparency")
+        val popupLifetime = json.getDouble("visibility.popup-lifetime")
+        return DisplaySettings(isSeeThrough, visibleToEveryone, visibilityRadius, backgroundTransparency, popupLifetime, type, critical)
+    }
+
+    fun createDisplay(data: DamageData, settings: DisplaySettings): DamageDisplay
 
     companion object {
         private var INSTANCE: ShowDamageAPI? = null

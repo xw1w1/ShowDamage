@@ -1,4 +1,4 @@
-package org.ttlzmc.showdamage.datatypes
+package org.ttlzmc.showdamage.api.datatypes
 
 enum class DamageType {
     SINGLE,

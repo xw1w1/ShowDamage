@@ -1,3 +1,5 @@
+package org.ttlzmc.showdamage.api
+
 import org.bukkit.damage.DamageType
 
 object BukkitDamageMask {

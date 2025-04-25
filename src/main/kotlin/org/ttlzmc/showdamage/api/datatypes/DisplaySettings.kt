@@ -1,6 +1,6 @@
-package org.ttlzmc.showdamage.datatypes
+package org.ttlzmc.showdamage.api.datatypes
 
-import org.ttlzmc.showdamage.DamageDisplay
+import org.ttlzmc.showdamage.api.DamageDisplay
 import org.ttlzmc.showdamage.ShowDamageConfiguration
 import org.ttlzmc.showdamage.util.JsonConfiguration
 
@@ -16,7 +16,7 @@ data class DisplaySettings(
     val isSeeThrough: Boolean,
     val visibleToEveryone: Boolean,
     val visibilityRadius: Double,
-    val backgroundColor: Int,
+    val backgroundTransparency: Int,
     val popupLifetime: Double,
 
     val damageType: DamageType,
