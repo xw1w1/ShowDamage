@@ -1,6 +1,7 @@
 package org.ttlzmc.showdamage
 
 import org.bukkit.plugin.java.JavaPlugin
+import org.ttlzmc.showdamage.DamageEventHandler;
 
 class ShowDamage : JavaPlugin() {
 
@@ -10,6 +11,7 @@ class ShowDamage : JavaPlugin() {
         this.slF4JLogger.info("ShowDamage enabled!")
         val endMs = System.currentTimeMillis()
         this.slF4JLogger.info("Configuration loaded in ${endMs - startMs}ms")
+        server.pluginManager.registerEvents(DamageEventHandler, this);
     }
 
     override fun onDisable() {
