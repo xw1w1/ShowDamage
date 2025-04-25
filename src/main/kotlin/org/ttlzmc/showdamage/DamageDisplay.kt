@@ -7,32 +7,36 @@ import org.bukkit.entity.Display
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.TextDisplay
+import org.ttlzmc.showdamage.datatypes.DamageData
 import org.ttlzmc.showdamage.datatypes.DisplaySettings
 
 class DamageDisplay(
+    private val damageData: DamageData,
     private val settings: DisplaySettings,
-    private val damageDealer: Entity
 ) {
     private val textEntity: TextDisplay
 
     // don't touch this, i will fix it in the next commit
     init {
+        val computedLocation =
         textEntity = computedLocation.world.spawn(computedLocation, TextDisplay::class.java).apply {
-            text(Component.empty())
+            text = when(settings.damageType) {
+
+            }
             isInvulnerable = true
             isPersistent = false
             setGravity(false)
 
-            isSeeThrough = config.getBoolean("visibility.show-through")
+            isSeeThrough = settings.isSeeThrough
             backgroundColor = Color.fromARGB(
-                config.getInt("colors.popup-background-transparency"),
+                settings.backgroundColor,
                 0,
                 0,
                 0
             )
             billboard = Display.Billboard.CENTER
 
-            if (config.getBoolean("visibility.visible-to-everyone")) {
+            if (settings.visibleToEveryone) {
                 isVisibleByDefault = true
             } else {
                 isVisibleByDefault = false
