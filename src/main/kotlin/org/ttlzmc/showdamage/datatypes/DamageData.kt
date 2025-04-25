@@ -12,7 +12,7 @@ data class DamageData (
     private val damagedEntities: List<Entity>
 ){
     private val valid: Boolean = BukkitDamageMask.isValidDamageType(source.damageType)
-    private val location = pushLocation(reciever.location, y = 5.0)
+    private val location = pushLocation(completeLocation(), y = 5.0)
 
     fun isValid(): Boolean {
         return this.valid
