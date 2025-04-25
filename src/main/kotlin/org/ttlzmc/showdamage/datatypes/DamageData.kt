@@ -20,9 +20,7 @@ data class DamageData (
 
     fun getLocation() = this.location
 
-    private fun pushLocation(location: Location, x: Double = 0.0, y: Double = 0.0, z: Double = 0.0) {
-        location.add(x, y, z)
-    }
+    private fun pushLocation(location: Location, x: Double = 0.0, y: Double = 0.0, z: Double = 0.0) = location.add(x, y, z)
 
     private fun completeLocation(): Location {
         check(damagedEntities.isEmpty()) { "Cannot calculate center for empty entity list. How did you even do that?" }
