@@ -18,6 +18,8 @@ data class DamageData (
         return this.valid
     }
 
+    fun getLocation() = this.location
+
     private fun pushLocation(location: Location, x: Double = 0.0, y: Double = 0.0, z: Double = 0.0) {
         location.add(x, y, z)
     }
