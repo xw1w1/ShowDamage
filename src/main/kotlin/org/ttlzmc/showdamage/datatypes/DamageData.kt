@@ -4,6 +4,7 @@ import org.bukkit.Location
 import org.bukkit.damage.DamageSource
 import org.bukkit.entity.Entity
 
+@Suppress("UnstableApiUsage")
 data class DamageData (
     private val source: DamageSource,
     private val damageType: DamageType,
