@@ -1,0 +1,6 @@
+name: ShowDamage
+description: Look what you've done!
+version: $version
+main: org.ttlzmc.showdamage.ShowDamage
+api-version: "1.21"
+authors: [Turbotaliz, Maikeru]

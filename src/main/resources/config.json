@@ -1,0 +1,28 @@
+{
+  "messages" : {
+    "hotbar-messages": true,
+    "projectile-messages": true
+  },
+
+  "visibility": {
+    "visible": true,
+    "visibility-distance": 32,
+    "visible-to-everyone": true,
+    "show-through": true,
+    "popup-lifetime": 25.0
+  },
+
+  "colors": {
+    "popup-background-transparency": 64,
+    "crit-damage": {
+      "first": "BE2510",
+      "second": "FD7348"
+    },
+    "crit-sign": "❈",
+    "message": {
+      "first": "25af46",
+      "second": "c3c3c3",
+      "elements": "2a4858"
+    }
+  }
+}
