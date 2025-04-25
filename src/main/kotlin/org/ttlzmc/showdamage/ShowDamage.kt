@@ -2,6 +2,8 @@ package org.ttlzmc.showdamage
 
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
+import org.ttlzmc.showdamage.api.ShowDamageAPI
+import org.ttlzmc.showdamage.api.ShowDamageAPIProvider
 
 class ShowDamage : JavaPlugin() {
 
@@ -12,6 +14,7 @@ class ShowDamage : JavaPlugin() {
         val endMs = System.currentTimeMillis()
         this.slF4JLogger.info("Configuration loaded in ${endMs - startMs}ms")
 
+        ShowDamageAPI.register(ShowDamageAPIProvider)
         server.pluginManager.registerEvents(DamageEventHandler, this)
     }
 
