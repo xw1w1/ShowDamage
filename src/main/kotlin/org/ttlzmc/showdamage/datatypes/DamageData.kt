@@ -6,9 +6,10 @@ import org.bukkit.entity.Entity
 
 data class DamageData (
     private val source: DamageSource,
-    private val reciever: Entity,
+    private val damageType: DamageType,
     private val damageDealt: Double,
-    ){
+    private val damagedEntities: List<Entity>
+){
     private val valid: Boolean = BukkitDamageMask.isValidDamageType(source.damageType)
     private val location = pushLocation(reciever.location, y = 5.0)
 
