@@ -14,6 +14,7 @@ object DamageEventHandler: Listener {
        // EntityDamageEvent(@NotNull Entity damagee, @NotNull EntityDamageEvent.DamageCause cause, @NotNull DamageSource damageSource, double damage)
        event.entity // Victim
        event.cause // Cause
+       event.entityType.entityClass // Class of the entity
        event.finalDamage // Damage after all reductions applied, (Armor?, Resistance Potion?)
        event.damage // Damage dealt
        event.damageSource // Damage source
