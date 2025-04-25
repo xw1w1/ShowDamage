@@ -1,6 +1,5 @@
 package org.ttlzmc.showdamage.datatypes
 
-import org.bukkit.Color
 import org.ttlzmc.showdamage.DamageDisplay
 import org.ttlzmc.showdamage.ShowDamageConfiguration
 import org.ttlzmc.showdamage.util.JsonConfiguration
@@ -16,6 +15,10 @@ import org.ttlzmc.showdamage.util.JsonConfiguration
 data class DisplaySettings(
     val isSeeThrough: Boolean,
     val visibleToEveryone: Boolean,
-    val backgroundColor: Color,
-    val popupLifetime: Double
+    val visibilityRadius: Double,
+    val backgroundColor: Int,
+    val popupLifetime: Double,
+
+    val damageType: DamageType,
+    val isCritical: Boolean
 )
