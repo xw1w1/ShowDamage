@@ -16,6 +16,12 @@ class ShowDamage : JavaPlugin() {
 
         ShowDamageAPI.register(ShowDamageAPIProvider)
         server.pluginManager.registerEvents(DamageEventHandler, this)
+        try {
+            val hotbarmessages = ShowDamageConfiguration.getBoolean("messages.hotbar-messages")
+            this.slF4JLogger.info("Hotbar messages: $hotbarmessages")
+        }catch (e: Exception) {
+           e.printStackTrace()
+        }
     }
 
     override fun onDisable() {
