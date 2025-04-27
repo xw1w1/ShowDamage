@@ -9,10 +9,14 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.ttlzmc.showdamage.api.ShowDamageAPI
+import org.ttlzmc.showdamage.api.datatypes.DamageData
+import org.ttlzmc.showdamage.api.datatypes.DamageRecord
 import org.ttlzmc.showdamage.api.datatypes.DamageType
 
 object DamageEventHandler: Listener {
     private var currentTick = 0L
+    private val api = ShowDamageAPI.get()
 
     @EventHandler
     fun onTickStart(ignored: ServerTickStartEvent) {
@@ -27,7 +31,17 @@ object DamageEventHandler: Listener {
 
         if (event.cause == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
             DamageDataFactory.createOrCompute(dealer.uniqueId, DamageType.MULTI, event.entity, currentTick)
+        } else {
+            val dr = DamageRecord(DamageType.SINGLE, dealer.uniqueId, currentTick)
+            dr.addTarget(event.entity)
+            check(dr.getTargets().size == 1){"wtf?"}
+            val dd = DamageData(dealer, event.cause, event.finalDamage, dr)
+            val display = api.createDisplay(
+                dd,
+                api.parseSettings(ShowDamageConfiguration.getJSON(), DamageType.SINGLE, event.isCritical)
+            )
         }
+
     }
 
     @EventHandler
