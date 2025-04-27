@@ -3,13 +3,14 @@ package org.ttlzmc.showdamage.util
 import com.google.gson.*
 import org.bukkit.configuration.file.FileConfiguration
 import java.io.File
+import java.io.InputStream
 
 class JsonConfiguration(private var file: File) : FileConfiguration() {
-
     private val gson = Gson()
     private var json: JsonObject = JsonObject()
 
-    init {
+    // This will throw if the file does not exist!
+    fun loadFromFile(file: File): JsonConfiguration {
         if (!file.exists() || !file.isFile || !file.canRead()) {
             throw IllegalStateException("Configuration is not loaded or not readable")
         }
@@ -23,6 +24,18 @@ class JsonConfiguration(private var file: File) : FileConfiguration() {
             if ((ex is JsonParseException) or (ex is JsonSyntaxException)) {
                 throw IllegalArgumentException("Json parsing error! Check configuration syntax.")
             }
+        }
+
+        return this
+    }
+
+    fun loadFromBytes(bytes: InputStream): JsonConfiguration {
+        if (bytes.available() <= 0)
+            throw IllegalArgumentException("Empty configuration file.")
+
+        Gson().newJsonReader(bytes.reader()).use {
+            this.json = gson.fromJson(it, JsonObject::class.java)
+            return this
         }
     }
 
