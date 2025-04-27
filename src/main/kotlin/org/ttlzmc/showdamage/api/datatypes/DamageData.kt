@@ -12,11 +12,13 @@ data class DamageData (
     private val damageRecord: DamageRecord
 ){
     private val valid: Boolean = true //FIXME:BukkitDamageMask.isValidDamageType(source.damageType)
-    private val location = pushLocation(completeLocation(), y = 5.0)
+    private val location = pushLocation(completeLocation(), y = 2.2)
 
     fun isValid(): Boolean {
         return this.valid
     }
+
+    fun getDamageDealt(): Double = damageDealt
 
     fun getLocation() = this.location
 

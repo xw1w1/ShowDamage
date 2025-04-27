@@ -13,14 +13,20 @@ import org.ttlzmc.showdamage.api.ShowDamageAPI
 import org.ttlzmc.showdamage.api.datatypes.DamageData
 import org.ttlzmc.showdamage.api.datatypes.DamageRecord
 import org.ttlzmc.showdamage.api.datatypes.DamageType
+import java.util.concurrent.Callable
+import java.util.concurrent.LinkedBlockingQueue
 
 object DamageEventHandler: Listener {
     private var currentTick = 0L
     private val api = ShowDamageAPI.get()
+    private val queue = LinkedBlockingQueue<DamageDataCallback>()
 
     @EventHandler
     fun onTickStart(ignored: ServerTickStartEvent) {
         currentTick++
+        if (!queue.isEmpty()) {
+            queue.remove().run() // anything
+        }
     }
 
     @EventHandler
@@ -34,12 +40,13 @@ object DamageEventHandler: Listener {
         } else {
             val dr = DamageRecord(DamageType.SINGLE, dealer.uniqueId, currentTick)
             dr.addTarget(event.entity)
-            check(dr.getTargets().size == 1){"wtf?"}
             val dd = DamageData(dealer, event.cause, event.finalDamage, dr)
             val display = api.createDisplay(
                 dd,
                 api.parseSettings(ShowDamageConfiguration.getJSON(), DamageType.SINGLE, event.isCritical)
             )
+
+            queue.put(DamageDataCallback(display, queue))
         }
 
     }
