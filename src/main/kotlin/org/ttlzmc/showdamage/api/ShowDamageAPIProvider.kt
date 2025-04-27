@@ -1,6 +1,7 @@
 package org.ttlzmc.showdamage.api
 
 import net.kyori.adventure.text.Component
+import org.bukkit.entity.Display
 import org.bukkit.entity.TextDisplay
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.annotations.ApiStatus
@@ -20,13 +21,14 @@ object ShowDamageAPIProvider : ShowDamageAPI {
         val display = data.getLocation().world.spawn(data.getLocation(), TextDisplay::class.java).apply {
             text(
                 when (settings.damageType) {
-                    DamageType.SINGLE -> Component.text("g")
+                    DamageType.SINGLE -> Component.text(data.getDamageDealt())
                     DamageType.MULTI -> Component.text("g")
-                    DamageType.MACE -> Component.text("g")
-                    DamageType.ARROW -> Component.text("g")
-                }
+                    DamageType.MACE -> Component.text(data.getDamageDealt())
+                    DamageType.ARROW -> Component.text(data.getDamageDealt())
+                },
             )
 
+            billboard = Display.Billboard.CENTER
             isInvisible = true
             isSeeThrough = settings.isSeeThrough
             settings.backgroundTransparency
