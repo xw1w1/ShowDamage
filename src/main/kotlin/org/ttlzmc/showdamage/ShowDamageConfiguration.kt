@@ -75,4 +75,7 @@ object ShowDamageConfiguration {
     fun getInt(path: String): Int {
         return this.json.getInt(path)
     }
+    fun getJSON() : JsonConfiguration{
+        return this.json;
+    }
 }
