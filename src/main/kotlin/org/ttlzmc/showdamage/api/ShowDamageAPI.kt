@@ -12,9 +12,11 @@ interface ShowDamageAPI {
     @ApiStatus.Internal
     fun defaultProvider() = ShowDamageAPIProvider
 
+    fun createDisplay(data: DamageData, settings: DisplaySettings): DamageDisplay
+
     fun getPlugin(): JavaPlugin
 
-    fun createSettings(json: JsonConfiguration, type: DamageType, critical: Boolean): DisplaySettings {
+    fun parseSettings(json: JsonConfiguration, type: DamageType, critical: Boolean): DisplaySettings {
         val isSeeThrough = json.getBoolean("visibility.show-through")
         val visibleToEveryone = json.getBoolean("visibility.visible-to-everyone")
         val visibilityRadius = json.getDouble("visibility.visibility-distance")
@@ -22,8 +24,6 @@ interface ShowDamageAPI {
         val popupLifetime = json.getDouble("visibility.popup-lifetime")
         return DisplaySettings(isSeeThrough, visibleToEveryone, visibilityRadius, backgroundTransparency, popupLifetime, type, critical)
     }
-
-    fun createDisplay(data: DamageData, settings: DisplaySettings): DamageDisplay
 
     companion object {
         private var INSTANCE: ShowDamageAPI? = null

@@ -2,7 +2,6 @@ package org.ttlzmc.showdamage.api.datatypes
 
 import org.bukkit.Location
 import org.bukkit.damage.DamageSource
-import org.bukkit.entity.Entity
 import org.ttlzmc.showdamage.api.BukkitDamageMask
 
 @Suppress("UnstableApiUsage")
@@ -10,7 +9,7 @@ data class DamageData (
     private val source: DamageSource,
     private val damageType: DamageType,
     private val damageDealt: Double,
-    private val damagedEntities: List<Entity>
+    private val damageRecord: DamageRecord
 ){
     private val valid: Boolean = BukkitDamageMask.isValidDamageType(source.damageType)
     private val location = pushLocation(completeLocation(), y = 5.0)
@@ -24,6 +23,7 @@ data class DamageData (
     private fun pushLocation(location: Location, x: Double = 0.0, y: Double = 0.0, z: Double = 0.0) = location.add(x, y, z)
 
     private fun completeLocation(): Location {
+        val damagedEntities = damageRecord.getTargets()
         check(damagedEntities.isEmpty()) { "Cannot calculate center for empty entity list. How did you even do that?" }
         if (damagedEntities.size == 1) return damagedEntities.first().location
         val world = damagedEntities.first().location.world

@@ -1,26 +1,52 @@
 package org.ttlzmc.showdamage
 
+import com.destroystokyo.paper.event.server.ServerTickEndEvent
+import com.destroystokyo.paper.event.server.ServerTickStartEvent
+import org.bukkit.entity.EntityType
+import org.bukkit.entity.Player
+import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.ttlzmc.showdamage.api.datatypes.DamageType
 
 object DamageEventHandler: Listener {
-   @EventHandler
-   fun onEntityDamage(event: EntityDamageEvent) {
-       /* Notes: EntityDamageItemEvent exists, so we probably don't need to worry about items.
-            Maybe entities like ItemFrames though.
-            EntityCombustEvent exists, might be useful for alternative TNT handling?
-       */
-       // EntityDamageEvent(@NotNull Entity damagee, @NotNull EntityDamageEvent.DamageCause cause, @NotNull DamageSource damageSource, double damage)
-       event.entity // Victim
-       event.cause // Cause
-       event.entityType.entityClass // Class of the entity
-       event.finalDamage // Damage after all reductions applied, (Armor?, Resistance Potion?)
-       event.damage // Damage dealt
-       event.damageSource // Damage source
-       event.damageSource.damageLocation // Seperate damage locations
-       event.damageSource.damageType // List of enum definitions
-       event.damageSource.directEntity // What is a direct entity?
-       event.damageSource.causingEntity // e.g. Player dealing damage
-   }
+    private var currentTick = 0L
+
+    @EventHandler
+    fun onTickStart(ignored: ServerTickStartEvent) {
+        currentTick++
+    }
+
+    @EventHandler
+    fun onEntityDamage(event: EntityDamageByEntityEvent) {
+        var dealer = event.damager
+        if (dealer is Projectile && dealer.shooter is Player) dealer = dealer.shooter as Player
+        if (event.entity.type == EntityType.ITEM) return
+
+        if (event.cause == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
+            DamageDataFactory.createOrCompute(dealer.uniqueId, DamageType.MULTI, event.entity, currentTick)
+        }
+    }
+
+    @EventHandler
+    fun onTickEnd(ignored: ServerTickEndEvent) {
+        val records = DamageDataFactory.getRecordsForTick(currentTick)
+        records.forEach { record ->
+            if (!record.checkState()) {
+                try {
+                    record.markReady()
+                    val dealer = record.getDealer()
+                    val targets = record.getTargets()
+                    targets.forEach { entity ->
+                        dealer.sendMessage("Вы поразили ${entity.name} с помощью Sweeping Edge!")
+                    }
+                } catch (ignored: NullPointerException) {
+                    // NPE from DamageRecord#getDealer
+                }
+            }
+        }
+        DamageDataFactory.purgeRecords(currentTick)
+    }
 }
