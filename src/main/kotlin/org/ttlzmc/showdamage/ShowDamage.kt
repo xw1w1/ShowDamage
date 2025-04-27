@@ -26,7 +26,7 @@ class ShowDamage : JavaPlugin() {
 
     override fun onDisable() {
         this.slF4JLogger.info("Look what you've done!")
-        ShowDamageConfiguration.saveConfiguration()
+        //ShowDamageConfiguration.saveConfiguration()
         HandlerList.unregisterAll(DamageEventHandler)
     }
 
