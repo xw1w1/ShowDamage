@@ -1,7 +1,11 @@
 package org.ttlzmc.showdamage.api
 
+
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.annotations.ApiStatus
+import org.ttlzmc.showdamage.DisplayRemoveRunnable
+import org.ttlzmc.showdamage.ShowDamage
+import org.ttlzmc.showdamage.ShowDamageConfiguration
 import org.ttlzmc.showdamage.api.datatypes.DamageData
 import org.ttlzmc.showdamage.api.datatypes.DamageType
 import org.ttlzmc.showdamage.api.datatypes.DisplaySettings
@@ -16,6 +20,13 @@ interface ShowDamageAPI {
 
     fun getPlugin(): JavaPlugin
 
+    fun delegateRemoveExec(display: DamageDisplay) {
+        val timeout = ShowDamageConfiguration.getJSON().getDouble("visibility.popup-lifetime").toLong()
+        val tickRate = ShowDamage.getInstance().server.serverTickManager.tickRate.toLong()
+
+        // Schedules this to execute synchronously.
+        DisplayRemoveRunnable(display).runTaskLater(getPlugin(), timeout*tickRate)
+    }
     fun parseSettings(json: JsonConfiguration, type: DamageType, critical: Boolean): DisplaySettings {
         val isSeeThrough = json.getBoolean("visibility.show-through")
         val visibleToEveryone = json.getBoolean("visibility.visible-to-everyone")
