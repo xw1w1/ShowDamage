@@ -1,0 +1,48 @@
+{
+  "messages" : {
+    "hotbar-messages": true,
+    "chat-messages": true
+  },
+
+  "display-settings": {
+    "popup-background-transparency": 64,
+    "popup-lifetime-ticks": 20,
+    "popup-visibility-distance": 32,
+    "popup-additional-height": 0.15,
+
+    "count-multiple-entities": true,
+    "multiple-entities-count-distance": 20.0,
+
+    "projectile-message-distance": 50.0,
+
+    "allow-toggle-command": true,
+    "show-to-damage-source-only": false,
+    "show-damage-as-hearts": false,
+    "show-prefixes": true,
+    "show-through-walls": true,
+    "filter-non-living-entities": true
+  },
+
+  "colors": {
+    "crit-damage": {
+      "first": "BE2510",
+      "second": "FD7348"
+    },
+    "message": {
+      "first": "25af46",
+      "second": "c3c3c3",
+      "elements": "2a4858"
+    }
+  },
+
+  "prefixes": {
+    "show-attack-prefixes": true,
+    "crit-prefix": "❈",
+    "sweep-prefix": "",
+    "explosion-prefix": "✹",
+    "mace-prefix": "⟡",
+    "projectile-prefix": "",
+    "trident-prefix": "",
+    "spear-prefix": ""
+  }
+}
