@@ -107,10 +107,10 @@ object DamageFormatter {
             accentFirst,
             TextUtils.single(
                 *TextUtils.components(
-                    "[", TextUtils.hex(accentSecond, "i"), "]",
+                    "[", TextUtils.hex(accentSecond, "i"), "] ",
                     TextUtils.hex(accentThird, victimName), " took ",
-                    TextUtils.hex(accentThird, damageString, "HP"),
-                    " damage."
+                    TextUtils.hex(accentThird, damageString, " HP"),
+                    " of damage."
                 )
             )
         )
