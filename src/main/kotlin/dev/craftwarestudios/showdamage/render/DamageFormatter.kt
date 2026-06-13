@@ -22,7 +22,9 @@ object DamageFormatter {
         val colFirst = configuration.getString("colors.mitigated-damage.first", "44577E")
         val colSecond = configuration.getString("colors.mitigated-damage.second","485273")
 
-        return gradient(colFirst, colSecond, "$shield -$baseValue")
+        val damageString = if (shield.isEmpty()) baseValue else "$shield -$baseValue"
+
+        return gradient(colFirst, colSecond, damageString)
     }
 
     fun createClusterComponentInlined(
