@@ -13,16 +13,14 @@ object DamageFormatter {
     fun createCompensatedDamageComponent(damage: DamageAmount): Component? {
         val compensated = damage.mitigated
         if (compensated <= 0.0) return null
-
-        val shield = "\uD83D\uDEE1" // xD
-        // probably I need to add config ^ for this one too
-        val colFirst = "44577E"
-        val colSecond = "485273"
-
         val configuration = ShowDamage.instance.configuration
+
         val hearts = configuration.getBoolean("display-settings.show-damage-as-hearts", false)
         val baseValue = DamageAmount(compensated, compensated).format(hearts)
-        // pretty hacky and weird way to do it, but why not?
+
+        val shield = configuration.getString("colors.mitigated-damage.icon", "\uD83D\uDEE1")
+        val colFirst = configuration.getString("colors.mitigated-damage.first", "44577E")
+        val colSecond = configuration.getString("colors.mitigated-damage.second","485273")
 
         return gradient(colFirst, colSecond, "$shield -$baseValue")
     }

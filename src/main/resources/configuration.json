@@ -28,6 +28,11 @@
       "first": "BE2510",
       "second": "FD7348"
     },
+    "mitigated-damage": {
+      "first": "44577E",
+      "second": "485273",
+      "icon": "🛡"
+    },
     "message": {
       "first": "25af46",
       "second": "c3c3c3",
