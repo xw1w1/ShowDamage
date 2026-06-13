@@ -18,7 +18,6 @@ repositories {
 }
 
 dependencies {
-    //implementation(kotlin("stdlib-jdk8"))
     implementation("com.google.code.gson:gson:2.14.0")
     implementation("org.incendo:cloud-core:2.0.0")
     implementation("org.incendo:cloud-paper:2.0.0-beta.15")
@@ -27,7 +26,7 @@ dependencies {
 
 tasks {
     runServer {
-        minecraftVersion("26.1.2")
+        minecraftVersion("1.21.11")
     }
 
     shadowJar {
