@@ -56,7 +56,7 @@ class DamageListener : Listener {
                         cluster.splashDamage,
                         cluster.critical,
                         cluster.displayKind,
-                        cluster.size,
+                        cluster.splashTargets,
                         cluster.damager
                     )
                 }
