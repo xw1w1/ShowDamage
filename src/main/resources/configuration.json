@@ -18,7 +18,6 @@
     "allow-toggle-command": true,
     "show-to-damage-source-only": false,
     "show-damage-as-hearts": false,
-    "show-prefixes": true,
     "show-through-walls": true,
     "filter-non-living-entities": true
   },
